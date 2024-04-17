@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HorizontalCard from "../components/HorizontalCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const last_posts = posts.slice(0, 3);
+---
+
+<BaseLayout sideBarActiveItemID="home">
+  <div class="pb-12 mt-5">
+    <div class="text-xl py-1">Hey there 👋</div>
+    <h1 class="text-5xl font-bold">I'm Enrique Shunnar</h1>
+    <h2 class="text-3xl py-3 font-bold">Software Engineer and Entrepreneur</h2>
+    <div class="py-2">
+      <text class="text-lg">
+        I'm a self-taught Software Engineer based in Panama🇵🇦, and Expert in the Javascript React Ecosystem with Typescript. Here, you'll find my collection of experiences, projects, experiments, ideas, and knowledge. My passion lies in the dynamic world of Javascript.
+        <br/>
+        <br/>
+        In my journey, I've worked on diverse projects—developing an Angular Dashboard for B2B SaaS Software, and creating a React-based Insurances Sector Platform tailored for Costa Rican market. Beyond business ventures, I find joy in contributing to meaningful initiatives like empowering women through sexual education and supporting pregnant women worldwide. My dedication to solving real-world challenges is evident in projects like the "Copyable Dashboard" for database migration and the Books Recommender connecting authors and readers.
+        <br/>
+        <br/>
+        I'm enthusiastic about innovation and committed to leveraging technology for meaningful impact worldwide.
+      </text>
+    </div>
+    <div class="mt-8">
+      <a class="btn" href="https://www.linkedin.com/in/enrique-shunnar/" target="_blank"> Let's connect!</a>
+      <a href="https://calendly.com/xtealer/freelance" target="_blank" class="btn btn-outline ml-5">
+        Get A Quote
+      </a>
+    </div>
+  </div>
+
+  <div>
+    <div class="text-3xl w-full font-bold mb-2">My last projects {"</>"}</div>
+  </div>
+
+  <HorizontalCard
+    title="Demo Project 1"
+    img="/post_img.webp"
+    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    url="#"
+    badge="NEW"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Demo Project 2"
+    img="/post_img.webp"
+    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    url="#"
+  />
+  <div class="divider my-0"></div>
+  <HorizontalCard
+    title="Demo Project 3"
+    img="/post_img.webp"
+    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    url="#"
+    badge="FOSS"
+  />
+
+  <div>
+    <div class="text-3xl w-full font-bold mb-5 mt-10">Latest from blog</div>
+  </div>
+
+  {
+    last_posts.map((post) => (
+      <>
+        <HorizontalCard
+          title={post.data.title}
+          img={post.data.heroImage}
+          desc={post.data.description}
+          url={"/blog/" + post.slug}
+          target="_self"
+          badge={post.data.badge}
+        />
+        <div class="divider my-0" />
+      </>
+    ))
+  }
+</BaseLayout>
